@@ -1,0 +1,2399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Violaceos Hotel Dashboard</title>
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <style>
+        /* =========================================
+           RESET
+        ========================================= */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #c014d6;
+            overflow-x: hidden;
+        }
+        /* =========================================
+           FIXED SIDEBAR
+        ========================================= */
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 190px;
+            height: 100vh;
+            background: #810096;
+            padding: 20px 10px;
+            z-index: 9999;
+            overflow-y: auto;
+        }
+        
+        .menu {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+        
+        .menu-item {
+            height: 55px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            border-radius: 7px;
+            transition: 0.25s;
+        }
+        
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .menu-item:hover {
+            background: #a900bd;
+            padding-left: 18px;
+        }
+        
+        .menu-item.active {
+            background: #b80aca;
+            font-weight: bold;
+        }
+        
+        .logout {
+            margin-top: auto;
+        }
+        /* =========================================
+           MAIN CONTENT
+        ========================================= */
+        
+        .main-content {
+            margin-left: 190px;
+            width: calc(100% - 190px);
+            min-height: 100vh;
+            background: #c014d6;
+        }
+        /* =========================================
+           GENERAL SECTION
+        ========================================= */
+        
+        section {
+            min-height: 100vh;
+            padding: 30px;
+            scroll-margin-top: 10px;
+        }
+        /* =========================================
+           DASHBOARD
+        ========================================= */
+        
+        .dashboard-section {
+            background: #c014d6;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-header h1 {
+            color: yellow;
+            font-size: 20px;
+        }
+        
+        .hotel-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: white;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hotel-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        /* DASHBOARD CARDS */
+        
+        .dashboard-cards {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            min-height: 500px;
+            margin: auto;
+        }
+        
+        .dash-card {
+            position: absolute;
+            width: 150px;
+            height: 80px;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: 0.2s;
+        }
+        
+        .dash-card:hover {
+            transform: scale(1.04);
+        }
+        
+        .card-title {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .card-number {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            left: 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        
+        .card-icon {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .active-guests {
+            top: 0;
+            right: 0;
+            background: #0879dc;
+        }
+        
+        .available-room {
+            top: 100px;
+            left: 0;
+            background: #00eeee;
+        }
+        
+        .housekeeping-card {
+            top: 170px;
+            right: 0;
+            background: #c7c400;
+            color: white;
+        }
+        
+        .messages-card {
+            top: 240px;
+            left: 0;
+            background: #00df2f;
+            color: white;
+        }
+        
+        .reservation-card-dashboard {
+            top: 310px;
+            right: 0;
+            background: #ddd;
+        }
+        
+        .report-card-dashboard {
+            top: 380px;
+            left: 0;
+            background: #ff2424;
+        }
+        /* =========================================
+           GUESTS
+        ========================================= */
+        
+        .guests-section {
+            background: #c014d6;
+            color: black;
+        }
+        
+        .section-title {
+            color: yellow;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .guests-container {
+            max-width: 800px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .guest-card {
+            position: relative;
+            background: #e48be9;
+            border-left: 8px solid #820096;
+            border-radius: 8px;
+            padding: 30px;
+            min-height: 480px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .guest-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .guest-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #820096;
+        }
+        
+        .guest-header-info {
+            font-size: 11px;
+        }
+        
+        .vip-btn {
+            background: #ffd900;
+            border: none;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 10px;
+        }
+        
+        .guest-info {
+            background: #b500c7;
+            color: white;
+            border-radius: 12px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 10px;
+        }
+        
+        .guest-info div {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .guest-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 12px 0;
+        }
+        
+        .stat {
+            width: 65px;
+            height: 45px;
+            background: #a900ba;
+            color: white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 8px;
+        }
+        
+        .stat strong {
+            font-size: 11px;
+        }
+        
+        .guest-history h3 {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .history-item {
+            background: #f0b8f2;
+            padding: 7px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            font-size: 9px;
+        }
+        
+        .feedback {
+            margin-top: 12px;
+            font-size: 10px;
+        }
+        
+        .feedback h2 {
+            font-size: 20px;
+        }
+        
+        .emergency {
+            margin-top: 12px;
+            font-size: 10px;
+        }
+        
+        .guest-action {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        
+        .guest-action button {
+            background: #820096;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+        }
+        /* =========================================
+           ROOM
+        ========================================= */
+        
+        .room-section {
+            background: #ddd;
+            color: #222;
+            padding: 50px 10px;
+        }
+        
+        .room-title {
+            color: #ffcc00;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+        
+        .room-search {
+            width: 180px;
+            height: 32px;
+            padding: 5px 10px;
+            border: 2px solid #aaa;
+            border-radius: 8px;
+            outline: none;
+            margin-bottom: 15px;
+        }
+        
+        .room-list {
+            max-width: 100%;
+            margin: auto;
+        }
+        
+        .room-card {
+            background: #eee;
+            border-bottom: 1px solid #aaa;
+            margin-bottom: 5px;
+            overflow: hidden;
+        }
+        
+        .room-info {
+            min-height: 45px;
+            padding: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 12px;
+        }
+        
+        .status {
+            white-space: nowrap;
+            text-align: center;
+        }
+        
+        .room-images {
+            width: 100%;
+            height: 160px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+        
+        .room-images img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        /* =========================================
+           MESSAGES
+        ========================================= */
+        
+        .message-section {
+            background: #c014d6;
+        }
+        
+        .message-title {
+            color: yellow;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .message-container {
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            background: #dfb9e7;
+            overflow-y: auto;
+            padding: 10px;
+            margin: auto;
+        }
+        
+        .guest-message {
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 7px;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+        
+        .guest-message:hover {
+            background: rgba(130, 0, 150, 0.15);
+        }
+        
+        .guest-icon {
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .message-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            font-size: 11px;
+        }
+        /* =========================================
+           RESERVATIONS
+        ========================================= */
+        
+        .reservations-section {
+            background: #c014d6;
+        }
+        
+        .reservation-container {
+            max-width: 600px;
+            height: 650px;
+            margin: auto;
+            background: #ddd;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .reservation-card {
+            background: #820096;
+            color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .reservation-card h3 {
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+        
+        .reservation-info {
+            font-size: 10px;
+            line-height: 1.4;
+        }
+        
+        .reservation-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .reservation-actions button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        
+        .cancel-btn:hover {
+            color: red;
+        }
+        
+        .confirm-btn:hover {
+            color: #00ff88;
+        }
+        /* =========================================
+           HOUSEKEEPING
+        ========================================= */
+        
+        .housekeeping-section {
+            background: #c014d6;
+        }
+        
+        .housekeeping-title {
+            color: yellow;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .housekeeping-container {
+            width: 100%;
+            max-width: 500px;
+            height: 500px;
+            margin: auto;
+            background: #ddd;
+            border: 3px solid #00aaff;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .housekeeping-person {
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            padding: 8px;
+        }
+        
+        .housekeeping-person:hover {
+            background: rgba(130, 0, 150, 0.15);
+        }
+        
+        .staff-image {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #9c6b6b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .staff-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .staff-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 12px;
+        }
+        /* =========================================
+           REPORT
+        ========================================= */
+        
+        .report-section {
+            background: #c014d6;
+            padding: 20px;
+        }
+        
+        .report-title {
+            width: 220px;
+            min-height: 40px;
+            margin: 0 auto 35px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: normal;
+        }
+        
+        .report-container {
+            width: 500px;
+            max-width: 100%;
+            min-height: 550px;
+            margin: auto;
+            padding: 30px;
+            background: #ddd;
+            overflow-y: auto;
+        }
+        
+        .report-guest {
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .report-guest:hover {
+            background: rgba(218, 4, 4, 0.12);
+            transform: translateX(4px);
+        }
+        
+        .report-image {
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #9c6b6b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 10px;
+        }
+        
+        .report-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .report-info {
+            font-size: 15px;
+            line-height: 1.2;
+        }
+        /* =========================================
+           SCROLLBARS
+        ========================================= */
+        
+        .message-container::-webkit-scrollbar,
+        .reservation-container::-webkit-scrollbar,
+        .housekeeping-container::-webkit-scrollbar,
+        .report-container::-webkit-scrollbar,
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .message-container::-webkit-scrollbar-thumb,
+        .reservation-container::-webkit-scrollbar-thumb,
+        .housekeeping-container::-webkit-scrollbar-thumb,
+        .report-container::-webkit-scrollbar-thumb,
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #06f164;
+            border-radius: 10px;
+        }
+        /* =========================================
+           TABLET
+        ========================================= */
+        
+        @media (min-width: 501px) and (max-width: 900px) {
+            .sidebar {
+                width: 150px;
+            }
+            .main-content {
+                margin-left: 150px;
+                width: calc(100% - 150px);
+            }
+            .menu-item {
+                font-size: 11px;
+            }
+            section {
+                padding: 25px 15px;
+            }
+            .room-images,
+            .room-images img {
+                height: 130px;
+            }
+        }
+        /* =========================================
+           MOBILE
+        ========================================= */
+        
+        @media (max-width: 500px) {
+            .sidebar {
+                width: 65px;
+                padding: 15px 7px;
+            }
+            .main-content {
+                margin-left: 65px;
+                width: calc(100% - 65px);
+            }
+            .menu-item {
+                height: 52px;
+                justify-content: center;
+                padding: 0;
+                gap: 0;
+            }
+            .menu-item span {
+                display: none;
+            }
+            .menu-item:hover {
+                padding-left: 0;
+            }
+            section {
+                padding: 25px 8px;
+            }
+            /* DASHBOARD */
+            .dashboard-header h1 {
+                font-size: 20px;
+            }
+            .hotel-logo {
+                width: 70px;
+                height: 70px;
+            }
+            .dashboard-cards {
+                max-width: 100%;
+                min-height: 400px;
+            }
+            .dash-card {
+                width: 100px;
+                height: 50px;
+                font-size: 9px;
+            }
+            .card-title {
+                font-size: 9px;
+            }
+            .card-number {
+                font-size: 10px;
+                bottom: 5px;
+            }
+            .card-icon {
+                font-size: 15px;
+                bottom: 5px;
+            }
+            .active-guests {
+                top: 0;
+            }
+            .available-room {
+                top: 60px;
+            }
+            .housekeeping-card {
+                top: 115px;
+            }
+            .messages-card {
+                top: 170px;
+            }
+            .reservation-card-dashboard {
+                top: 225px;
+            }
+            .report-card-dashboard {
+                top: 280px;
+            }
+            /* GUESTS */
+            .section-title {
+                font-size: 22px;
+            }
+            .guest-card {
+                min-height: 430px;
+                padding: 10px;
+            }
+            .guest-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            /* ROOM */
+            .room-title {
+                font-size: 20px;
+            }
+            .room-search {
+                width: 120px;
+                height: 25px;
+                font-size: 10px;
+            }
+            .room-info {
+                font-size: 9px;
+                min-height: 35px;
+            }
+            .room-images,
+            .room-images img {
+                height: 90px;
+            }
+            /* MESSAGE */
+            .message-title {
+                font-size: 12px;
+            }
+            .message-container {
+                width: 100%;
+                height: 400px;
+            }
+            .guest-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 15px;
+            }
+            .message-info {
+                font-size: 8px;
+            }
+            /* RESERVATION */
+            .reservation-container {
+                height: 600px;
+                padding: 10px;
+            }
+            .reservation-card {
+                padding: 10px;
+            }
+            .reservation-info {
+                font-size: 8px;
+            }
+            /* HOUSEKEEPING */
+            .housekeeping-title {
+                font-size: 18px;
+            }
+            .housekeeping-container {
+                width: 100%;
+                height: 400px;
+                padding: 12px;
+            }
+            .housekeeping-person {
+                min-height: 65px;
+            }
+            .staff-image {
+                width: 40px;
+                height: 40px;
+            }
+            .staff-info {
+                font-size: 9px;
+            }
+            /* REPORT */
+            .report-section {
+                padding: 15px 8px;
+            }
+            .report-title {
+                width: 165px;
+                min-height: 28px;
+                font-size: 11px;
+                margin-bottom: 25px;
+            }
+            .report-container {
+                width: 95%;
+                min-height: 450px;
+                padding: 15px;
+            }
+            .report-guest {
+                min-height: 70px;
+                gap: 10px;
+            }
+            .report-image {
+                width: 40px;
+                height: 40px;
+                font-size: 7px;
+            }
+            .report-info {
+                font-size: 10px;
+            }
+        }
+        /* =========================================
+           SMALL PHONE
+        ========================================= */
+        
+        @media (max-width: 350px) {
+            .sidebar {
+                width: 55px;
+            }
+            .main-content {
+                margin-left: 55px;
+                width: calc(100% - 55px);
+            }
+            .menu-item {
+                height: 48px;
+            }
+            .dashboard-header h1 {
+                font-size: 20px;
+            }
+            .hotel-logo {
+                width: 55px;
+                height: 55px;
+            }
+            .dash-card {
+                width: 90px;
+            }
+            .report-container {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================= -->
+
+    <aside class="sidebar">
+
+        <nav class="menu">
+
+
+            <a href="#dashboard" class="menu-item active">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="#guests" class="menu-item">
+
+                <i class="fa-solid fa-users"></i>
+
+                <span>Guests</span>
+
+            </a>
+
+
+            <a href="#room" class="menu-item">
+
+                <i class="fa-solid fa-bed"></i>
+
+                <span>Room</span>
+
+            </a>
+
+
+            <a href="#message" class="menu-item">
+
+                <i class="fa-solid fa-comments"></i>
+
+                <span>Messages</span>
+
+            </a>
+
+
+            <a href="#reservations" class="menu-item">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                <span>Reservations</span>
+
+            </a>
+
+
+            <a href="#housekeeping" class="menu-item">
+
+                <i class="fa-solid fa-broom"></i>
+
+                <span>Housekeeping</span>
+
+            </a>
+
+
+            <a href="#report" class="menu-item">
+
+                <i class="fa-solid fa-file-lines"></i>
+
+                <span>Reports</span>
+
+            </a>
+
+
+            <a href="zoom.html" class="menu-item logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <main class="main-content">
+
+
+        <!-- =====================================
+             DASHBOARD
+        ====================================== -->
+
+        <section id="dashboard" class="dashboard-section">
+
+
+            <div class="dashboard-header">
+
+                <h1>CRM DASHBOARD SYSTEM</h1>
+
+
+                <div class="hotel-logo">
+
+                    <img src="logo.png" alt="Violaceos Hotel">
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-cards">
+
+                <a href="#guests">
+                    <div class="dash-card active-guests">
+
+                        <div class="card-title">
+                            ACTIVE GUESTS
+                        </div>
+
+                        <div class="card-number">
+                            30
+                        </div>
+
+
+
+                        <i class="fa-solid fa-user-check card-icon"></i>
+
+                    </div>
+                </a>
+
+
+                <div class="dash-card available-room">
+                    <a href="#room">
+                        <div class="card-title">
+                            AVAILABLE<br> ROOM
+                        </div>
+
+                        <div class="card-number">
+                            1000
+                        </div>
+                    </a>
+                </div>
+
+
+                <div class="dash-card housekeeping-card">
+
+                    <div class="card-title">
+                        Housekeeping
+                    </div>
+
+                    <div class="card-number">
+                        70
+                    </div>
+
+                </div>
+
+
+                <div class="dash-card messages-card">
+
+                    <div class="card-title">
+                        Messages
+                    </div>
+
+                    <div class="card-number">
+                        57
+                    </div>
+
+                    <i class="fa-solid fa-comment card-icon"></i>
+
+                </div>
+
+
+                <div class="dash-card reservation-card-dashboard">
+
+                    <div class="card-title">
+                        Reservation
+                    </div>
+
+                    <div class="card-number">
+                        90
+                    </div>
+
+                </div>
+
+
+                <div class="dash-card report-card-dashboard">
+
+                    <div class="card-title">
+                        Report
+                    </div>
+
+                    <div class="card-number">
+                        10
+                    </div>
+
+                    <i class="fa-solid fa-circle-exclamation card-icon"></i>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             GUESTS
+        ====================================== -->
+
+        <section id="guests" class="guests-section">
+
+
+            <h1 class="section-title">
+                Guests
+            </h1>
+
+
+            <div class="guests-container">
+
+
+                <div class="guest-card">
+
+
+                    <div class="guest-header">
+
+                        <div class="guest-avatar">
+
+                            <i class="fa-solid fa-user"></i>
+
+                        </div>
+
+
+                        <div class="guest-header-info">
+
+                            <button class="vip-btn">
+                                VIP Guest
+                            </button>
+
+                            <p>Guest since: 2024</p>
+
+                            <p>
+                                Guest since Dec 2024 · 2 stays
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="guest-info">
+
+                        <div>
+                            <span>Email</span>
+                            <strong>juan@email.com</strong>
+                        </div>
+
+                        <div>
+                            <span>ID Number</span>
+                            <strong>123456789</strong>
+                        </div>
+
+                        <div>
+                            <span>Nationality</span>
+                            <strong>Filipino</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="guest-stats">
+
+                        <div class="stat">
+
+                            <strong>7</strong>
+
+                            <span>Stays</span>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <strong>4.85</strong>
+
+                            <span>Rating</span>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <strong>₱49,200</strong>
+
+                            <span>Spent</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="guest-history">
+
+                        <h3>Guest History</h3>
+
+
+                        <div class="history-item">
+
+                            Stayed 3 nights in 2024, Deluxe
+
+                            <br> Aug 15–18, 2024
+
+                        </div>
+
+
+                        <div class="history-item">
+
+                            Confirmed current reservation
+
+                            <br> Aug 15–18, 2026
+
+                        </div>
+
+
+                        <div class="history-item">
+
+                            Prefers high floor, away from elevator
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feedback">
+
+                        <h2>Feed</h2>
+
+                        <p>
+                            <b>Cleanliness</b>
+                        </p>
+
+                        <p>
+                            Room was spotless, but bathroom supplies were a bit worn.
+                        </p>
+
+                    </div>
+
+
+                    <div class="emergency">
+
+                        <h3>Emergency Hotline</h3>
+
+                        <p>PNP: 911</p>
+
+                        <p>Hotel: 7428</p>
+
+                    </div>
+
+
+                    <div class="guest-action">
+
+                        <button>
+                            View
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="guests-container">
+
+
+                <div class="guest-card">
+
+
+                    <div class="guest-header">
+
+                        <div class="guest-avatar">
+
+                            <i class="fa-solid fa-user"></i>
+
+                        </div>
+
+
+                        <div class="guest-header-info">
+
+                            <button class="vip-btn">
+                                VIP Guest
+                            </button>
+
+                            <p>Guest since: 2024</p>
+
+                            <p>
+                                Guest since Dec 2024 · 2 stays
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="guest-info">
+
+                        <div>
+                            <span>Email</span>
+                            <strong>juan@email.com</strong>
+                        </div>
+
+                        <div>
+                            <span>ID Number</span>
+                            <strong>123456789</strong>
+                        </div>
+
+                        <div>
+                            <span>Nationality</span>
+                            <strong>Filipino</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="guest-stats">
+
+                        <div class="stat">
+
+                            <strong>7</strong>
+
+                            <span>Stays</span>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <strong>4.85</strong>
+
+                            <span>Rating</span>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <strong>₱49,200</strong>
+
+                            <span>Spent</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="guest-history">
+
+                        <h3>Guest History</h3>
+
+
+                        <div class="history-item">
+
+                            Stayed 3 nights in 2024, Deluxe
+
+                            <br> Aug 15–18, 2024
+
+                        </div>
+
+
+                        <div class="history-item">
+
+                            Confirmed current reservation
+
+                            <br> Aug 15–18, 2026
+
+                        </div>
+
+
+                        <div class="history-item">
+
+                            Prefers high floor, away from elevator
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feedback">
+
+                        <h2>Feed</h2>
+
+                        <p>
+                            <b>Cleanliness</b>
+                        </p>
+
+                        <p>
+                            Room was spotless, but bathroom supplies were a bit worn.
+                        </p>
+
+                    </div>
+
+
+                    <div class="emergency">
+
+                        <h3>Emergency Hotline</h3>
+
+                        <p>PNP: 911</p>
+
+                        <p>Hotel: 7428</p>
+
+                    </div>
+
+
+                    <div class="guest-action">
+
+                        <button>
+                            View
+                        </button>
+
+                    </div>
+
+                </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             ROOM
+        ====================================== -->
+
+        <section id="room" class="room-section">
+
+
+            <h1 class="room-title">
+                ROOM
+            </h1>
+
+
+            <input type="text" id="roomSearch" class="room-search" placeholder="Search" onkeyup="searchRooms()">
+
+
+            <div class="room-list">
+
+
+                <!-- ROOM 104 -->
+
+                <div class="room-card">
+
+                    <div class="room-info">
+
+                        <span>
+                            Room 104
+                        </span>
+
+                        <span>
+                            🟢 FREE
+                        </span>
+
+                    </div>
+
+
+                    <div class="room-images">
+
+                        <img src="room104.jpg">
+
+                        <img src="room104-2.jpg" alt="Room 104">
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROOM 105 -->
+
+                <div class="room-card">
+
+                    <div class="room-info">
+
+                        <span>
+                            Room 105
+                        </span>
+
+                        <span>
+                            🔵 HOLD<br>
+                            ₱2,500
+                        </span>
+
+                        <span>
+                            🔴 BUSY<br>
+                            Juan
+                        </span>
+
+                    </div>
+
+
+                    <div class="room-images">
+
+                        <img src="room105-1.jpg" alt="Room 105">
+
+                        <img src="room105-2.jpg" alt="Room 105">
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROOM 106 -->
+
+                <div class="room-card">
+
+                    <div class="room-info">
+
+                        <span>
+                            Room 106
+                        </span>
+
+                        <span>
+                            🟢 FREE
+                        </span>
+
+                        <span>
+                            🟡 CLEAN
+                        </span>
+
+                    </div>
+
+
+                    <div class="room-images">
+
+                        <img src="room106-1.jpg" alt="Room 106">
+
+                        <img src="room106-2.jpg" alt="Room 106">
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROOM 107 -->
+
+                <div class="room-card">
+
+                    <div class="room-info">
+
+                        <span>
+                            Room 107
+                        </span>
+
+                        <span>
+                            🔵 HOLD<br>
+                            ₱2,500
+                        </span>
+
+                        <span>
+                            🔴 BUSY<br>
+                            CHRISTIAN
+                        </span>
+
+                    </div>
+
+
+                    <div class="room-images">
+
+                        <img src="room107-1.jpg" alt="Room 107">
+
+                        <img src="room107-2.jpg" alt="Room 107">
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROOM 108 -->
+
+                <div class="room-card">
+
+                    <div class="room-info">
+
+                        <span>
+                            Room 108
+                        </span>
+
+                        <span>
+                            🟢 FREE
+                        </span>
+
+                        <span>
+                            🟡 CLEAN
+                        </span>
+
+                    </div>
+
+
+                    <div class="room-images">
+
+                        <img src="room108-1.jpg" alt="Room 108">
+
+                        <img src="room108-2.jpg" alt="Room 108">
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROOM 109 -->
+
+                <div class="room-card">
+
+                    <div class="room-info">
+
+                        <span>
+                            Room 109
+                        </span>
+
+                        <span>
+                            🟢 FREE
+                        </span>
+
+                    </div>
+
+
+                    <div class="room-images">
+
+                        <img src="room109-1.jpg" alt="Room 109">
+
+                        <img src="room109-2.jpg" alt="Room 109">
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             MESSAGES
+        ====================================== -->
+
+        <section id="message" class="message-section">
+
+
+            <h1 class="message-title">
+                ALL GUESTS MESSAGE
+            </h1>
+
+
+            <div class="message-container">
+
+
+                <div class="guest-message">
+
+                    <div class="guest-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div class="message-info">
+
+                        <strong>
+                            CHRISTIAN A. BAUTISTA
+                        </strong>
+
+                        <span>
+                            Messages
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="guest-message">
+
+                    <div class="guest-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div class="message-info">
+
+                        <strong>
+                            JUAN DELA CRUZ
+                        </strong>
+
+                        <span>
+                            Messages
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="guest-message">
+
+                    <div class="guest-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div class="message-info">
+
+                        <strong>
+                            MARIA SANTOS
+                        </strong>
+
+                        <span>
+                            Messages
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="guest-message">
+
+                    <div class="guest-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div class="message-info">
+
+                        <strong>
+                            PEDRO REYES
+                        </strong>
+
+                        <span>
+                            Messages
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="guest-message">
+
+                    <div class="guest-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div class="message-info">
+
+                        <strong>
+                            ANA GARCIA
+                        </strong>
+
+                        <span>
+                            Messages
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="guest-message">
+
+                    <div class="guest-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div class="message-info">
+
+                        <strong>
+                            MICHAEL CRUZ
+                        </strong>
+
+                        <span>
+                            Messages
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             RESERVATIONS
+        ====================================== -->
+
+        <section id="reservations" class="reservations-section">
+
+
+            <h1 class="section-title">
+                Reservations
+            </h1>
+
+
+            <div class="reservation-container">
+
+
+                <!-- RESERVATION 1 -->
+
+                <div class="reservation-card">
+
+                    <h3>
+                        NEW RESERVATION
+                    </h3>
+
+
+                    <div class="reservation-info">
+
+                        <p>
+                            <b>Guest Name:</b> Juan Dela Cruz
+                        </p>
+
+                        <p>
+                            <b>Phone:</b> 09123456789
+                        </p>
+
+                        <p>
+                            <b>Email:</b> juan@email.com
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Check-in:</b> Aug 15, 2026
+                        </p>
+
+                        <p>
+                            <b>Check-out:</b> Aug 18, 2026
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Room Type:</b> Deluxe Room
+                        </p>
+
+                        <p>
+                            <b>Room Number:</b> 205
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Guests:</b> 2
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Payment:</b> Paid
+                        </p>
+
+                    </div>
+
+
+                    <div class="reservation-actions">
+
+                        <button class="cancel-btn">
+                            CANCEL
+                        </button>
+
+                        <button class="confirm-btn">
+                            CONFIRM BOOKING
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESERVATION 2 -->
+
+                <div class="reservation-card">
+
+                    <h3>
+                        NEW RESERVATION
+                    </h3>
+
+
+                    <div class="reservation-info">
+
+                        <p>
+                            <b>Guest Name:</b> Maria Santos
+                        </p>
+
+                        <p>
+                            <b>Phone:</b> 09123456789
+                        </p>
+
+                        <p>
+                            <b>Email:</b> maria@email.com
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Check-in:</b> Aug 20, 2026
+                        </p>
+
+                        <p>
+                            <b>Check-out:</b> Aug 22, 2026
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Room Type:</b> Deluxe Room
+                        </p>
+
+                        <p>
+                            <b>Room Number:</b> 205
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Guests:</b> 2
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Payment:</b> Paid
+                        </p>
+
+                    </div>
+
+
+                    <div class="reservation-actions">
+
+                        <button class="cancel-btn">
+                            CANCEL
+                        </button>
+
+                        <button class="confirm-btn">
+                            CONFIRM BOOKING
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESERVATION 3 -->
+
+                <div class="reservation-card">
+
+                    <h3>
+                        NEW RESERVATION
+                    </h3>
+
+
+                    <div class="reservation-info">
+
+                        <p>
+                            <b>Guest Name:</b> Pedro Reyes
+                        </p>
+
+                        <p>
+                            <b>Phone:</b> 09123456789
+                        </p>
+
+                        <p>
+                            <b>Email:</b> pedro@email.com
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Check-in:</b> Aug 25, 2026
+                        </p>
+
+                        <p>
+                            <b>Check-out:</b> Aug 28, 2026
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Room Type:</b> Deluxe Room
+                        </p>
+
+                        <p>
+                            <b>Room Number:</b> 206
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Guests:</b> 3
+                        </p>
+
+                        <br>
+
+                        <p>
+                            <b>Payment:</b> Paid
+                        </p>
+
+                    </div>
+
+
+                    <div class="reservation-actions">
+
+                        <button class="cancel-btn">
+                            CANCEL
+                        </button>
+
+                        <button class="confirm-btn">
+                            CONFIRM BOOKING
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             HOUSEKEEPING
+        ====================================== -->
+
+        <section id="housekeeping" class="housekeeping-section">
+
+
+            <h1 class="housekeeping-title">
+                Housekeeping
+            </h1>
+
+
+            <div class="housekeeping-container">
+
+
+                <div class="housekeeping-person">
+
+                    <div class="staff-image">
+
+                        <span>image</span>
+
+                    </div>
+
+                    <div class="staff-info">
+
+                        <strong>Ticman</strong>
+
+                        <span>
+                            message
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="housekeeping-person">
+
+                    <div class="staff-image">
+
+                        <span>image</span>
+
+                    </div>
+
+                    <div class="staff-info">
+
+                        <strong>Aljon</strong>
+
+                        <span>
+                            message
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="housekeeping-person">
+
+                    <div class="staff-image">
+
+                        <span>image</span>
+
+                    </div>
+
+                    <div class="staff-info">
+
+                        <strong>Sisno</strong>
+
+                        <span>
+                            message
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="housekeeping-person">
+
+                    <div class="staff-image">
+
+                        <span>image</span>
+
+                    </div>
+
+                    <div class="staff-info">
+
+                        <strong>Valio</strong>
+
+                        <span>
+                            message
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             REPORT
+        ====================================== -->
+
+        <section id="report" class="report-section">
+
+
+            <h1 class="report-title">
+                REPORT GUESTS
+            </h1>
+
+
+            <div class="report-container">
+
+
+                <div class="report-guest">
+
+                    <div class="report-image">
+
+                        <span>image</span>
+
+                    </div>
+
+                    <div class="report-info">
+
+                        <strong>
+                            Christian A.<br>
+                            Bautista
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-guest">
+
+                    <div class="report-image">
+
+                        <span>image</span>
+
+                    </div>
+
+                    <div class="report-info">
+
+                        <strong>
+                            Juan Dela Cruz
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-guest">
+
+                    <div class="report-image">
+
+                        <span>image</span>
+
+                    </div>
+
+                    <div class="report-info">
+
+                        <strong>
+                            Maria Santos
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+        /* =====================================
+                                                                                   ROOM SEARCH
+                                                                                ===================================== */
+
+        function searchRooms() {
+
+            const search =
+                document
+                .getElementById("roomSearch")
+                .value
+                .toLowerCase();
+
+
+            const rooms =
+                document.querySelectorAll(".room-card");
+
+
+            rooms.forEach(function(room) {
+
+                const text =
+                    room.textContent.toLowerCase();
+
+
+                if (text.includes(search)) {
+
+                    room.style.display = "block";
+
+                } else {
+
+                    room.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+
+
+        /* =====================================
+           ACTIVE SIDEBAR MENU
+        ===================================== */
+
+        const menuItems =
+            document.querySelectorAll(".menu-item");
+
+
+        menuItems.forEach(function(item) {
+
+            item.addEventListener("click", function() {
+
+                menuItems.forEach(function(menu) {
+
+                    menu.classList.remove("active");
+
+                });
+
+
+                item.classList.add("active");
+
+            });
+
+        });
+
+
+
+        /* =====================================
+           AUTOMATIC ACTIVE MENU ON SCROLL
+        ===================================== */
+
+        const sections =
+            document.querySelectorAll("main section");
+
+
+        window.addEventListener("scroll", function() {
+
+            let current = "";
+
+
+            sections.forEach(function(section) {
+
+                const sectionTop =
+                    section.offsetTop - 150;
+
+
+                if (window.scrollY >= sectionTop) {
+
+                    current = section.getAttribute("id");
+
+                }
+
+            });
+
+
+            menuItems.forEach(function(item) {
+
+                item.classList.remove("active");
+
+
+                if (
+                    item.getAttribute("href") ===
+                    "#" + current
+                ) {
+
+                    item.classList.add("active");
+
+                }
+
+            });
+
+        });
+    </script>
+
+
+</body>
+
+</html>
